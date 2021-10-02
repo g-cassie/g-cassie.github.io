@@ -1,0 +1,6 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'Gordon Cassie'
+theme = ["github.com/nodejh/hugo-theme-mini"]
+[social]
+twitter = "https://twitter.com/gordon_cassie"

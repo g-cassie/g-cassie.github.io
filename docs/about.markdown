@@ -4,15 +4,12 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+My name is Gordon Cassie. I began my career as a securities lawyer but within a few years stumbled into
+the world of software development.  From 2013 to 2020 I worked on [Closing Folders](https://www.closingfolders.com),
+ a SaaS product to help corporate lawyers run complex legal transactions. In 2020 we sold the business to
+[iManage](https://www.imanage.com) where I now continue to head-up the Closing Folders technical team.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+Professionally, I like nerding out about how to build high performing software development teams. Unprofessionally, I
+like nerding out about gardening, Fred Astaire movies and real-time tactics video games.
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+I live with my wife Lyndsey and our three kids in beautiful Victoria, British Columbia, Canada.

@@ -3,34 +3,34 @@ layout: post
 title:  "Getting Started With Pants and Django (Part 1)"
 ---
 
-After writing about our experience with moving a mature Django app to Pants, I began wondering how difficult it
-would be to start a brand new Django project on Pants.  While it overall wasn't too great an undertaking to move
-our project over, it sure would have saved time if we had been using a build from the beginning.
+After writing about [our experience with moving a mature Django app to
+Pants](https://g-cassie.github.io/2021/10/02/django-pants.html), I began wondering how difficult it would be to start a
+brand new Django project on Pants.  While it overall wasn't too great an undertaking to move our project over, it sure
+would have saved time if we had been using Pants from the beginning.
 
 Of course, if you want to get up and running with Django as fast as possible, adding in the complexity of a build
 tool like Pants is going to slow you down.  My hypothesis is that the early benefits of Pants outweigh the initial
-complexity bump from using Pants from day 1.  In particular, I believe the following features of Pants can pay early
-dividends:
+complexity bump.  In particular, I believe the following features of Pants can pay large dividends early in a project's
+lifecycle.
 
  - out-of-the-box linting and syntax formatting
  - eliminating the need for a virtualenvs
  - fast test runs with out-of-the-box caching and parallelization
  - painless deployments with `.pex` files
 
-
 To test this hypothesis, I decided to follow the [official django beginner
-tutorial](https://docs.djangoproject.com/en/3.2/intro/tutorial01/) and see what was involved in adding Pants into the
-equation.
+tutorial](https://docs.djangoproject.com/en/3.2/intro/tutorial01/) and see what was involved to get it running on
+Pants.
 
 If you are trying to follow this tutorial, checkout [the repo for this
 tutorial](https://github.com/g-cassie/django-pants-tutorial). I have created each step as its own commit so you can
 refer to the diffs to see exactly how it works.  If you encounter any trouble, the [Pants Slack
-group](https://join.slack.com/t/pantsbuild/shared_invite/zt-d0uh0mok-RLvVosDiX6JDpvStH~bFBA) is an amazing community wth
-some of the most helpful people I have met in OSS.
+group](https://join.slack.com/t/pantsbuild/shared_invite/zt-d0uh0mok-RLvVosDiX6JDpvStH~bFBA) is an amazing community
+with some of the most helpful people I have met in OSS.
 
 ## Step 1: Initial Repo Setup
 
-To begin, we want to create a new directory, initialize a git repo, add a gitignore for python.  We are going to be
+To begin, we want to create a new directory, initialize a git repo, and add a gitignore for python.  We are going to be
 following the django tutorial so we will name our project “django-tutorial”.
 
 ```
@@ -58,7 +58,7 @@ Now add the following Pants specific lines to end of your gitignore
 
 ## Step 2: Setup Pants
 
-Create a file named `pants.toml`.  At the root of your new repo. This will be the central place for all of your pants
+Create a file named `pants.toml`.  At the root of your new repo. This will be the central place for all of your Pants
 configuration.
 
 ```
@@ -71,11 +71,11 @@ backend_packages = ["pants.backend.python"]
 string_imports = true
 ```
 
-This sets up pants for a python project and also enables the string import feature which is necessary for pants to play
+This sets up Pants for a python project and also enables the string import feature which is necessary for Pants to play
 nicely with Django settings files.
 
-Now you are ready to download the pants script. This will be committed to your repo and will be the entrypoint for pants
-going forward.
+Now you are ready to download the `pants` script. This will be committed to your repo and will be the entrypoint for
+Pants going forward.
 
 ```
 curl -L -O https://static.pantsbuild.org/setup/pants && chmod +x ./pants
@@ -84,15 +84,15 @@ curl -L -O https://static.pantsbuild.org/setup/pants && chmod +x ./pants
 
 
 ## Step 3: Setup 3rdparty dependencies.
-One of the features of pants is it can handle management of all your third party dependencies. This allows you to
-enforce consistent third party dependency versions across all of your applications.  The biggest advantage though is it
-can build all third party dependencies into standalone pex files (python executable) which can be used to easily deploy
+One of the features of Pants is that it can manage all of your third party dependencies. This allows you to enforce
+consistent third party dependency versions across all of your applications.  The biggest advantage, though is it can
+build all third party dependencies into standalone pex files (python executable) which can be used to easily deploy
 your code in a consistent way to production.
 
 Pants is incredibly flexible with how you configure your repo but in our case we are going to create a subdirectory
-called `3rdparty` where we will keep a list of all our requirements.  We will then create another directory called `src`
-where we will keep our application code.  In each of these folders we will create BUILD files which provide targets for
-Pants to use when building your project.
+called `3rdparty` where we will keep a list of all our requirements.  We will then create another directory called
+`src` where we will keep our application code.  In each of these folders we will create BUILD files which provide
+targets for Pants to use when building your project.
 
 Create the following files with the contents indicated.
 
@@ -117,13 +117,13 @@ pex_binary(
 )
 ```
 
-The combination of these files ends up making an executable target called `django-admin` which will run the django-admin
-script in the Django pypi module. That means that by running `./pants run src:django-admin`, Pants will download Django
-from pypi, install it into an ephemeral virtual environment and run the django-admin script.
+The combination of these files ends up making an executable target called `django-admin` which will run the
+django-admin script in the Django pypi module. That means that by running `./pants run src:django-admin`, Pants will
+download Django from pypi, install it into an ephemeral virtual environment and run the django-admin script.
 
 # Step 4: Setup the Django Project
 
-The first step of the Django tutorial instructs you how to setup a django project.  We can roughly follow along,
+Part 1 of the Django tutorial instructs you how to setup a django project.  We can roughly follow along,
 however, because we are using Pants there are a few differences.
 
 When the tutorial says to run `django-admin startproject mysite`, you will need to run the following:
@@ -162,7 +162,7 @@ This creates another binary target that can be invoked using `./pants run`.  You
 `src/mysite:mysite` as a dependency. This is telling Pants that when it builds this script to run, it needs to include
 `src/mysite` in order for it to work correctly.
 
-The only issue is, currently Pants will not think there are any targets in `src/mysite`, because we haven’t created any.
+The only issue is, currently, Pants will not find any targets in `src/mysite`, because we haven’t created any.
 To fix this, create `src/mysite/BUILD` as follows.
 
 ```
@@ -170,17 +170,17 @@ To fix this, create `src/mysite/BUILD` as follows.
 python_sources()
 ```
 
-We should now be able to call manage.py like this
+We should now be able to call manage.py like this:
 
 ```
 ./pants run src:manage
 ```
 
-This should output the available commands from manage.py.
+This should output the available commands from `manage.py`.
 
 ## Step 5: Create the Polls App
 
-We can now use this `manage` binary target to create the Polls app as directed in the tutorial. Just as before, we will
+We can now use this `manage` binary target to create the polls app as directed in the tutorial. Just as before, we will
 need to move it into the src directory after we create it.
 
 ```
@@ -189,7 +189,7 @@ mv polls src
 ```
 
 We also need to create a BUILD file like we did with the `mysite` directory.  While we can do this manually, this is a
-common task so pants has a helper for this.
+common task so Pants has a helper for this.
 
 ```
 ./pants tailor
@@ -290,7 +290,7 @@ DATABASES = {
 ...
 ```
 
-When prompted to run migrate, use the following pants equivalent
+When prompted to run migrate, use the following Pants equivalent
 
 ```
 ./pants run src:manage -- migrate
@@ -330,8 +330,8 @@ INSTALLED_APPS = [
 ]
 ```
 
-At this point we need to run `makemigrations`. Unfortunately there isn’t a great path for this on Pants as of writing
-(though one is in the works). What I found worked best was the following.
+At this point we need to run `makemigrations`. Unfortunately there isn’t a great path for this on Pants as of writing.
+What I found worked best was the following.
 
 ```
 ./pants run src:manage -- makemigrations --dry-run --verbosity 3 polls
@@ -379,7 +379,7 @@ templates directory and then include it as a dependency of the `polls` target.
 
 Normally in Pants, each directory represents a single target. This establishes a nice balance between the boilerplate
 of BUILD files and keeping targets narrowly scoped (you could theoretically have one target that includes all the files
-in your app but it would kind of defeat the whole purpose of pants).  With templates, the benefits of narrow modules
+in your app but it would kind of defeat the whole purpose of Pants).  With templates, the benefits of narrow modules
 are reduced (they are just static files that don't get evaluated unless explicitly used).  As a result, we are just
 going to make a single target at the top of the templates directory to include all html files.
 
@@ -404,14 +404,15 @@ python_sources(
 ...
 ```
 
-Now you should be able to run the server and visit `http://127.0.0.1:8000/polls/` successfully.
+At this point, you should be able to run the server and visit `http://127.0.0.1:8000/polls/` successfully.
 
-You should now be able to complete the rest of Parts 3 and 4 of the tutorial without any adjustment.
+You can now complete the rest of Parts 3 and 4 of the tutorial without any adjustment.
 
 ## Step 8: A few quick wins from Pants
 
-If you've been following along with these steps you may now be wondering why it's worth all this effort. At this
-point we, can easily drop in a few lines of config and get syntax formatting, dependency ordering and linting for free.
+If you've been following along with these steps you may now be wondering why it's worth all this effort. So,
+before we stop for the day, let's take a moment and take advantage of some of the best practices that Pants makes
+trivial to implement: syntax formatting, dependency ordering and linting.
 
 To do this, we just need to add some more backend packages to our pants config.
 
@@ -456,8 +457,8 @@ To actually fix the problems being found by lint, we can use the `fmt` goal.
 ./pants fmt ::
 ```
 
-This will format all your syntax with `black` and order your dependencies with `isort`.  Unfortunately you have to solve
-your own `flake8` errors!
+This will format all your syntax with `black` and order your dependencies with `isort`.  Unfortunately you have to
+solve your own `flake8` errors!
 
 ## That's it for this time.
 
@@ -470,3 +471,5 @@ the next post (I keep it pretty quiet otherwise).
 And, as always, we are hiring at iManage Closing Folders. If you want to help us figure out how to build high
 performing software development teams [check out the job postings](https://imanage.com/about/careers/) for our Toronto
 office (remote friendly!).
+
+Thanks to Benjy Weinberger for reviewing drafts of this post.

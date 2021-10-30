@@ -71,6 +71,8 @@ While I am very grateful that we untangled this ball of dependencies, since we m
 
 At this point, we are approaching two years of working with Pants and we couldn’t be happier.  Our test suite has continued to grow but, with Pants caching, our CI test times have remained constant (or decreased in some cases).  Using pex files as deploy artifacts has drastically simplified our deploy process and eliminated a huge amount of risk compared to how we were doing things before.  I think most importantly however, our development team is thinking far more proactively about how to manage dependencies and making smarter decisions about separating code into sensible modules. 
 
+If you enjoyed this post, please consider [following me on Twitter](https://twitter.com/gordon_cassie) to hear about future posts (I keep it pretty quiet otherwise).
+
 And it wouldn’t be a technical blog post if I didn’t mention we are hiring at iManage Closing Folders. If you want to help us figure out how to build the highest performing software development team [check out the job postings](https://imanage.com/about/careers/) for our Toronto office (remote friendly!).
 
 Thanks to Benjy Weinberger and Mack Heller for reviewing drafts of this post.

@@ -58,7 +58,10 @@ Now add the following Pants specific lines to end of your gitignore
 
 ## Step 2: Setup Pants
 
-Create a file named `pants.toml`.  At the root of your new repo. This will be the central place for all of your Pants
+Now we are going to setup Pants. To do this, I am going to loosely follow the [Getting Started section of their
+docs](https://www.pantsbuild.org/docs/installation).
+
+First, create a file named `pants.toml`.  At the root of your new repo. This will be the central place for all of your Pants
 configuration.
 
 ```

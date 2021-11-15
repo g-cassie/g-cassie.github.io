@@ -465,7 +465,7 @@ solve your own `flake8` errors!
 
 ## That's it for this time.
 
-At this point, we have completed the first four pats of the seven part Django tutorial. The next part deals with
+At this point, we have completed the first four parts of the seven part Django tutorial. The next part deals with
 testing. This is another area where Pants can really take things up a notch, giving us parallelized test runs, test
 result caching and smart target selection for free.  I'll also make sure to cover how to get autoreload
 working on the development server.  [Follow me on Twitter](https://twitter.com/gordon_cassie) for notifications about

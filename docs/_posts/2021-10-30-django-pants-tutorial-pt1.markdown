@@ -67,7 +67,7 @@ configuration.
 ```
 # pants.toml
 [GLOBAL]
-pants_version = "2.8.0rc0"
+pants_version = "2.8.0rc5"
 backend_packages = ["pants.backend.python"]
 
 [python-infer]

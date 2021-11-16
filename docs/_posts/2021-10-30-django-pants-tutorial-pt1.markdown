@@ -431,6 +431,19 @@ backend_packages = [
 ]
 ```
 
+By default, `black` and `isort` do not play nicely together so we need to define a `pyproject.toml` file to configure
+them ([more details
+here](https://www.pantsbuild.org/v2.8/docs/python-linters-and-formatters#black-and-isort-can-work-together)).
+```
+# pyproject.toml
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.black]
+line-length = 120
+```
+
 Now we can run the `lint` goal to see whether we are failing any of these new checks.
 ```
 ./pants lint ::
@@ -454,6 +467,7 @@ args=[
   "--max-line-length=120"
 ]
 ```
+
 
 To actually fix the problems being found by lint, we can use the `fmt` goal.
 ```
